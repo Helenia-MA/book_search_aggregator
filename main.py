@@ -1,44 +1,5 @@
-import requests
 from tabulate import tabulate
- 
-def search_google_books(title, author = ""):
-    query = f"{title}+inauthor:{author}" if author else title
-    url = f"https://www.googleapis.com/books/v1/volumes?q={title, author}"
-    response = requests.get(url)
-    return response.json()
-
-def search_open_library(title, author=""):
-    url = f"https://openlibrary.org/search.json?title={title}"
-    if author:
-        url += f"&author={author}"
-    response = requests.get(url)
-    return response.json()
-
-def display_results(results):
-    headers = ["Source", "Title", "Author", "Link"]
-    table = [[r['source'], r['title'], r['author'], r['link']] for r in results]
-    print(tabulate(table, headers=headers, tablefmt="fancy_grid"))
-
-def combine_data(g_results, o_results):
-    combined = []
-
-    if g_results:
-        for item in g_results.get('items', []):
-            combined.append({'source': 'Google Books',
-                'title': item['volumeInfo'].get('title', 'N/A'),
-                'author': item['volumeInfo'].get('authors', ['N/A'])[0],
-                'link': item['volumeInfo'].get('infoLink', 'N/A')})
-    
-    if o_results:
-        for doc in o_results.get('docs', []):
-            combined.append({
-                'source': 'Open Library',
-                'title': doc.get('title', 'N/A'),
-                'author': doc.get('author_name', ['N/A'])[0],
-                'link': f"https://openlibrary.org{doc.get('key', '')}" if 'key' in doc else 'N/A'
-            })
-    return combined
-
+from book_search import search_google_books, search_open_library, combine_data
 def main() :
     print("Welcome to the Book aggregator!")
     book = input("Enter a book title: ")
