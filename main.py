@@ -1,13 +1,16 @@
 import requests
 from tabulate import tabulate
  
-def search_google_books(title):
-    url = f"https://www.googleapis.com/books/v1/volumes?q={title}"
+def search_google_books(title, author = ""):
+    query = f"{title}+inauthor:{author}" if author else title
+    url = f"https://www.googleapis.com/books/v1/volumes?q={title, author}"
     response = requests.get(url)
     return response.json()
 
-def search_open_library(title):
+def search_open_library(title, author=""):
     url = f"https://openlibrary.org/search.json?title={title}"
+    if author:
+        url += f"&author={author}"
     response = requests.get(url)
     return response.json()
 
@@ -39,8 +42,9 @@ def combine_data(g_results, o_results):
 def main() :
     print("Welcome to the Book aggregator!")
     book = input("Enter a book title: ")
-    g_results = search_google_books(book)
-    o_results = search_open_library(book)
+    author = input("Enter author's name (or leave blank to skip): ")
+    g_results = search_google_books(book, author)
+    o_results = search_open_library(book, author)
 
     combined_data = combine_data(g_results, o_results)
     display_results(combined_data)
