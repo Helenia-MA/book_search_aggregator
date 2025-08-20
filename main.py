@@ -1,6 +1,5 @@
 from tabulate import tabulate
 from book_search import search_google_books, search_open_library, combine_data
-
 # displays the results of the book search from the different sites in a tabulated format
 def display_results(results):
     headers = ["Source", "Title", "Author", "Link"]
