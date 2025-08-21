@@ -1,17 +1,26 @@
 import requests
- 
-def search_google_books(title, author = ""):
+from functools import lru_cache
+
+@lru_cache(maxsize = 128)
+def cached_google_books_search(title, author = ""):
     query = f"{title}+inauthor:{author}" if author else title
     url = f"https://www.googleapis.com/books/v1/volumes?q={title, author}"
     response = requests.get(url)
     return response.json()
 
-def search_open_library(title, author=""):
+@lru_cache(maxsize = 128)
+def cached_open_library_search(title, author=""):
     url = f"https://openlibrary.org/search.json?title={title}"
     if author:
         url += f"&author={author}"
     response = requests.get(url)
     return response.json()
+
+def search_google_books(title, author = ""):
+    return cached_google_books_search(title, author)
+
+def search_open_library(title, author = ""):
+    return cached_open_library_search(title, author)
 
 def combine_data(g_results, o_results):
     combined = []
