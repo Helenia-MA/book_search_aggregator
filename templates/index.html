@@ -25,6 +25,7 @@
         <h2>Results</h2>
         <table>
             <tr>
+                <th>Cover</th>
                 <th>Source</th>
                 <th>Title</th>
                 <th>Author</th>
@@ -32,6 +33,13 @@
             </tr>
             {% for r in results %}
             <tr>
+                <td>
+                    {% if r.image %}
+                    <img src="{{r.image }}" alt="Cover" width="60">
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
                 <td>{{ r.source }}</td>
                 <td>{{ r.title }}</td>
                 <td>{{ r.author }}</td>
@@ -42,3 +50,4 @@
     {% endif %}
 </body>
 </html>
+
