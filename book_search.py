@@ -28,11 +28,13 @@ def combine_data(g_results, o_results):
     if g_results:
         for item in g_results.get('items', []):  
             volume = item['volumeInfo'];
+            image = volume.get('imageLinks', {}).get('thumbnail', None)
             combined.append({
                 'source': 'Google Books',
                 'title': volume.get('title', 'N/A'),
                 'author': volume.get('authors', ['N/A'])[0],
                 'link': volume.get('infoLink', 'N/A'),
+                'image': image
              })
     
     if o_results:
@@ -44,6 +46,7 @@ def combine_data(g_results, o_results):
                 'link': f"https://openlibrary.org{doc.get('key', '')}" if 'key' in doc else 'N/A',
             })
     return combined
+
 
 
 
