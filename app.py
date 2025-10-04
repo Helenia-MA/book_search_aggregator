@@ -7,7 +7,7 @@ app= Flask(__name__)
 
 def home():
   results = []
-  if request.method ="POST":
+  if request.method =="POST":
         book = request.form.get("title")
         author = request.form.get("author")
         g_results = search_google_books(book, author)
@@ -15,6 +15,7 @@ def home():
         results = combine_data(g_results, o_results)
     return render_template("index.html", results=results)
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app.run(debug=True)
+
 
