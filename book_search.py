@@ -28,10 +28,11 @@ def combine_data(g_results, o_results):
     if g_results:
         for item in g_results.get('items', []):
             volume = item.get('volumeinfo', {})
-            image = volume.get('imageLinks', {}).get('thumbnail', None)                  
-            combined.append({'source': 'Google Books',
+            image = volume.get('imageLinks', {}).get('thumbnail')                  
+            combined.append({
+                'source': 'Google Books',
                 'title': volume.get('title', 'N/A'),
-                'author': ivolume.get('authors', ['N/A'])[0],
+                'author': volume.get('authors', ['N/A'])[0],
                 'link': volume.get('infoLink', 'N/A'),
                 'image': image
              })
@@ -46,6 +47,7 @@ def combine_data(g_results, o_results):
                 'image': image 
             })
     return combined
+
 
 
 
