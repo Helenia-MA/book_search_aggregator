@@ -44,8 +44,10 @@ def combine_data(g_results, o_results):
                 'title': doc.get('title', 'N/A'),
                 'author': doc.get('author_name', ['N/A'])[0],
                 'link': f"https://openlibrary.org{doc.get('key', '')}" if 'key' in doc else 'N/A',
+                'image': image
             })
     return combined
+
 
 
 
