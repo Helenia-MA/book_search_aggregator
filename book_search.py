@@ -39,6 +39,7 @@ def combine_data(g_results, o_results):
     
     if o_results:
         for doc in o_results.get('docs', []):
+            image = f"https://covers.openlibrary.org/b/id/{doc.get('cover_i', 0)}-M.jpg" if 'cover_i' in doc else None
             combined.append({
                 'source': 'Open Library',
                 'title': doc.get('title', 'N/A'),
@@ -47,6 +48,7 @@ def combine_data(g_results, o_results):
                 'image': image
             })
     return combined
+
 
 
 
